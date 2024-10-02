@@ -5,7 +5,7 @@ import { Ionicons } from "expo-vector-icons/";
 import { MenuItemSelectedEvent } from "./modules/expo-context-menu";
 
 function App() {
-  const menuOptions = useMemo(
+  const contextMenu = useMemo(
     () => ({
       items: [
         { title: "Edit", action: "edit", icon: "edit_icon" },
@@ -26,7 +26,6 @@ function App() {
 
   const handleMenuItemPress = (event: MenuItemSelectedEvent) => {
     const action = event.nativeEvent.action;
-    // Handle the action
     Alert.alert(`${action} pressed`, `Do you really want to ${action}?`);
   };
 
@@ -42,7 +41,7 @@ function App() {
           marginVertical: 50,
           backgroundColor: "lightgray",
         }}
-        menuConfig={menuOptions}
+        menuConfig={contextMenu}
         triggerOnLongPress
         onPressMenuItem={handleMenuItemPress}
       >
@@ -51,7 +50,7 @@ function App() {
 
       <ContextMenuView
         style={{ marginVertical: 50 }}
-        menuConfig={menuOptions}
+        menuConfig={contextMenu}
         onPressMenuItem={handleMenuItemPress}
       >
         <Text>Tap me to see the context menu</Text>
@@ -59,14 +58,14 @@ function App() {
 
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <ContextMenuView
-          menuConfig={menuOptions}
+          menuConfig={contextMenu}
           onPressMenuItem={handleMenuItemPress}
         >
           <Ionicons name="md-eye" size={32} color="blue" />
         </ContextMenuView>
 
         <ContextMenuView
-          menuConfig={menuOptions}
+          menuConfig={contextMenu}
           onPressMenuItem={handleMenuItemPress}
         >
           <Ionicons name="md-alert" size={32} color="blue" />
