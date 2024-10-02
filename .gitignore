@@ -33,3 +33,13 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# iOS/Android build folders
+/ios/
+/android/
+
+# Android modules build
+/modules/**/android/build
+
+# Android modules gradle
+/modules/**/android/.gradle

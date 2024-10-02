@@ -1,20 +1,88 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useMemo } from "react";
+import { View, Text, Alert } from "react-native";
+import { ContextMenuView } from "./modules/expo-context-menu/";
+import { Ionicons } from "expo-vector-icons/";
+import { MenuItemSelectedEvent } from "./modules/expo-context-menu";
 
-export default function App() {
+function App() {
+  const menuOptions = useMemo(
+    () => ({
+      items: [
+        { title: "Edit", action: "edit", icon: "edit_icon" },
+        {
+          title: "Delete",
+          action: "delete",
+          // This is where we could use images loaded from vector icons or
+          // use images like this:
+          // icon: require("./path/to/image.png"),
+          // icon: FontAwesome.getImageSourceSync("trash", 24),
+          icon: "delete_icon",
+          destructive: true,
+        },
+      ],
+    }),
+    []
+  );
+
+  const handleMenuItemPress = (event: MenuItemSelectedEvent) => {
+    const action = event.nativeEvent.action;
+    // Handle the action
+    Alert.alert(`${action} pressed`, `Do you really want to ${action}?`);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ padding: 14, marginTop: 60 }}>
+      <Text>
+        <Ionicons name="md-checkmark-circle" size={32} color="green" /> Context
+        menu demo
+      </Text>
+
+      <ContextMenuView
+        style={{
+          marginVertical: 50,
+          backgroundColor: "lightgray",
+        }}
+        menuConfig={menuOptions}
+        triggerOnLongPress
+        onPressMenuItem={handleMenuItemPress}
+      >
+        <Text>Long-press me to see the context menu</Text>
+      </ContextMenuView>
+
+      <ContextMenuView
+        style={{ marginVertical: 50 }}
+        menuConfig={menuOptions}
+        onPressMenuItem={handleMenuItemPress}
+      >
+        <Text>Tap me to see the context menu</Text>
+      </ContextMenuView>
+
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <ContextMenuView
+          menuConfig={menuOptions}
+          onPressMenuItem={handleMenuItemPress}
+        >
+          <Ionicons name="md-eye" size={32} color="blue" />
+        </ContextMenuView>
+
+        <ContextMenuView
+          menuConfig={menuOptions}
+          onPressMenuItem={handleMenuItemPress}
+        >
+          <Ionicons name="md-alert" size={32} color="blue" />
+        </ContextMenuView>
+      </View>
+      <View
+        style={{
+          marginTop: 50,
+          width: 100,
+          height: 100,
+          backgroundColor: "red",
+        }}
+      />
+      <Text>Some text</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
