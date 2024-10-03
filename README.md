@@ -1,4 +1,4 @@
-# export-context-menu
+# expo-context-menu
 
 This repo contains a simple demo implementation of context menus on iOS/Android for Expo using Expo modules with the correct Platform usage for each.
 
